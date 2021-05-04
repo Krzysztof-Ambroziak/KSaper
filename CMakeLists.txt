@@ -19,6 +19,11 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 add_executable(KSaper)
 target_sources(KSaper
     PRIVATE src/KSaperApplication.cpp
+    PRIVATE src/gui/MainWindow.cpp
+    PRIVATE src/gui/MainWindow.hpp
+    PRIVATE src/gui/MainWindow.ui
+    PRIVATE src/gui/BoardWidget.cpp
+    PRIVATE src/gui/BoardWidget.hpp
 )
 
 target_link_libraries(${PROJECT_NAME}

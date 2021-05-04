@@ -1,7 +1,12 @@
+#include "src/gui/MainWindow.hpp"
+
 #include <QApplication>
 
 int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
+    
+    MainWindow mainWindow;
+    mainWindow.show();
     
     return QApplication::exec();
 }
