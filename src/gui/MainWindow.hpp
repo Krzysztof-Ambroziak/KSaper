@@ -7,9 +7,13 @@ namespace Ui {
     class MainWindow;
 }
 
+class Actions;
+
 class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget* parent = nullptr);
+    
+    void buildMenuAndToolBar(const Actions& actions);
     
     ~MainWindow();
 

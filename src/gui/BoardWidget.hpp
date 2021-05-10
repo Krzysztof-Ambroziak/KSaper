@@ -6,8 +6,6 @@
 class BoardWidget : public QWidget {
 private:
     static constexpr int PADDING = 20;
-    static constexpr int MAX_COLUMNS = 50;
-    static constexpr int MAX_ROWS = 30;
     static constexpr int MIN_SIZE = 10;
     static constexpr int MIN_SPACING = 1;
 
