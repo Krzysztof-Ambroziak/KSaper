@@ -5,6 +5,13 @@
 #include <algorithm>
 
 #include <QAction>
+#include <QSettings>
+
+const QString Controller::DIFFICULTY_GROUP = "difficulty";
+const QString Controller::LEVEL_KEY = "level";
+const QString Controller::ROWS_KEY = "rows";
+const QString Controller::COLUMNS_KEY = "columns";
+const QString Controller::MINES_KEY = "mines";
 
 int Controller::mineSquares(const QVector<ksaper::Field>& squares) {
     return std::count(squares.cbegin(), squares.cend(), ksaper::MINE);
@@ -31,9 +38,29 @@ Controller::Controller(Model* const model, MainWindow* const mainWindow) :
 }
 
 void Controller::start() {
+    readPreviousBoardLevel();
     mainWindow->buildMenuAndToolBar(actions);
-    
     mainWindow->show();
+}
+
+void Controller::readPreviousBoardLevel() const {
+    QSettings settings;
+    settings.beginGroup(DIFFICULTY_GROUP);
+    ksaper::Size size;
+    ksaper::Level level = static_cast<ksaper::Level>(settings.value(LEVEL_KEY, ksaper::EASY).toInt());
+    
+    if(ksaper::LevelToSize.keys().contains(level))
+        size = ksaper::LevelToSize[level];
+    else {
+        const auto defaultLevel = ksaper::LevelToSize[ksaper::DEFAULT_LEVEL];
+        const auto rows = settings.value(ROWS_KEY, defaultLevel.dimension.rows).toInt();
+        const auto columns = settings.value(COLUMNS_KEY, defaultLevel.dimension.columns).toInt();
+        const auto mines = settings.value(MINES_KEY, defaultLevel.mines).toInt();
+        size = {{rows, columns}, mines};
+    }
+    settings.endGroup();
+    
+    model->setLevel(level, size);
 }
 
 bool Controller::isMinesFullFilled(const QVector<ksaper::Field>& squares) const {

@@ -19,12 +19,22 @@ private:
     
     static void specialCopy(const QVector<ksaper::Field>& from, QVector<ksaper::Field>& to);
 
+private:
+    static const QString DIFFICULTY_GROUP;
+    
+    static const QString LEVEL_KEY;
+    static const QString ROWS_KEY;
+    static const QString COLUMNS_KEY;
+    static const QString MINES_KEY;
+
 public:
     Controller(Model* model, MainWindow* mainWindow);
     
     void start();
 
 private:
+    void readPreviousBoardLevel() const;
+    
     bool isMinesFullFilled(const QVector<ksaper::Field>& squares) const;
 
 private slots:

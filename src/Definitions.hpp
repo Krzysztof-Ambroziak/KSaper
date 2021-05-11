@@ -8,6 +8,9 @@ namespace ksaper {
 constexpr int MAX_ROWS = 30;
 constexpr int MAX_COLUMNS = 50;
 
+const QString ORGANIZATION = "krzysztof.ambroziak";
+const QString APPLICATION = "KSaper";
+
 enum Field {
     EMPTY = 0,
     MINE = 1
@@ -38,6 +41,8 @@ enum Level {
     EXPERT = 2,
     CUSTOM = 3
 };
+
+constexpr Level DEFAULT_LEVEL = Level::EASY;
 
 struct Dimension {
     int rows;
