@@ -2,18 +2,19 @@
 #define MODEL_MODEL_HPP
 
 #include "Board.hpp"
+#include "IModel.hpp"
 
 #include <memory>
 
-class Model {
+class Model : public IModel {
 public:
-    int rows() const;
+    int rows() const Q_DECL_OVERRIDE;
     
-    int columns() const;
+    int columns() const Q_DECL_OVERRIDE;
     
-    int mines() const;
+    int mines() const Q_DECL_OVERRIDE;
     
-    ksaper::Field field(int row, int column) const;
+    ksaper::Field field(int row, int column) const Q_DECL_OVERRIDE;
     
     void setLevel(ksaper::Level level, const ksaper::Size& size);
     

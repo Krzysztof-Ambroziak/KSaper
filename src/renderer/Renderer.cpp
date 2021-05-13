@@ -1,9 +1,8 @@
 #include "Renderer.hpp"
-#include "src/Definitions.hpp"
 #include "src/gui/BoardWidget.hpp"
-#include "src/model/Model.hpp"
+#include "src/model/IModel.hpp"
 
-void Renderer::setModel(const Model* const model) {
+void Renderer::setModel(const IModel* const model) {
     Renderer::model = model;
 }
 

@@ -31,6 +31,7 @@ target_sources(KSaper
     PRIVATE src/gui/BoardWidget.hpp
     PRIVATE src/model/Board.cpp
     PRIVATE src/model/Board.hpp
+    PRIVATE src/model/IModel.hpp
     PRIVATE src/model/Model.cpp
     PRIVATE src/model/Model.hpp
     PRIVATE src/renderer/Renderer.cpp

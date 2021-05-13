@@ -3,11 +3,11 @@
 
 #include <QPainter>
 
-class Model;
+class IModel;
 
 class Renderer {
 public:
-    void setModel(const Model* model);
+    void setModel(const IModel* model);
     
     void render(QPainter& painter);
 
@@ -17,7 +17,7 @@ private:
     int fieldSize(int width, int height, int spacing);
 
 private:
-    const Model* model = nullptr;
+    const IModel* model = nullptr;
 };
 
 #endif // RENDERER_RENDERER_HPP
