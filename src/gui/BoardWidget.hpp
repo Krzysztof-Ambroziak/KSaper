@@ -3,8 +3,10 @@
 
 #include <QWidget>
 
+class Renderer;
+
 class BoardWidget : public QWidget {
-private:
+public:
     static constexpr int PADDING = 20;
     static constexpr int MIN_SIZE = 10;
     static constexpr int MIN_SPACING = 1;
@@ -12,12 +14,13 @@ private:
 public:
     explicit BoardWidget(QWidget* parent = nullptr);
     
-    int spacingSize() const;
-    
-    int fieldSize(int spacing) const;
+    void setRenderer(Renderer* renderer);
 
 protected:
     void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
+
+private:
+    Renderer* renderer = nullptr;
 };
 
 #endif // GUI_BOARDWIDGET_HPP

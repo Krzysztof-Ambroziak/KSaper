@@ -8,6 +8,10 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->setupUi(this);
 }
 
+void MainWindow::setRenderer(Renderer* const renderer) {
+    ui->boardWidget->setRenderer(renderer);
+}
+
 void MainWindow::buildMenuAndToolBar(const Actions& actions) {
     auto menuBar = ui->menubar;
     auto menuGame = menuBar->addMenu("&Game");

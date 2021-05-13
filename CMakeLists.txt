@@ -33,6 +33,8 @@ target_sources(KSaper
     PRIVATE src/model/Board.hpp
     PRIVATE src/model/Model.cpp
     PRIVATE src/model/Model.hpp
+    PRIVATE src/renderer/Renderer.cpp
+    PRIVATE src/renderer/Renderer.hpp
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -10,6 +10,7 @@
 
 class MainWindow;
 class Model;
+class Renderer;
 
 class Controller : public QObject {
 private:
@@ -28,7 +29,7 @@ private:
     static const QString MINES_KEY;
 
 public:
-    Controller(Model* model, MainWindow* mainWindow);
+    Controller(Model* model, MainWindow* mainWindow, Renderer* renderer);
     
     void start();
 
@@ -44,6 +45,8 @@ private:
     Model* const model;
     
     MainWindow* const mainWindow;
+    
+    Renderer* const renderer;
     
     Actions actions;
     

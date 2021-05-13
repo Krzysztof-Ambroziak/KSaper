@@ -1,9 +1,9 @@
 #include "Controller.hpp"
 #include "src/gui/MainWindow.hpp"
 #include "src/model/Model.hpp"
+#include "src/renderer/Renderer.hpp"
 
 #include <algorithm>
-
 #include <QAction>
 #include <QSettings>
 
@@ -30,10 +30,13 @@ void Controller::specialCopy(const QVector<ksaper::Field>& from, QVector<ksaper:
     }
 }
 
-Controller::Controller(Model* const model, MainWindow* const mainWindow) :
+Controller::Controller(Model* const model, MainWindow* const mainWindow, Renderer* const renderer) :
         model(model),
         mainWindow(mainWindow),
+        renderer(renderer),
         randGenerator(QRandomGenerator::securelySeeded()) {
+    renderer->setModel(model);
+    mainWindow->setRenderer(renderer);
     QObject::connect(actions.newGame, &QAction::triggered, this, &Controller::newGame);
 }
 
