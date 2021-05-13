@@ -21,7 +21,6 @@ void BoardWidget::paintEvent(QPaintEvent* event) {
     static QPainter painter;
     
     painter.begin(this);
-    if(renderer != nullptr)
-        renderer->render(painter);
+    renderer->render(painter);
     painter.end();
 }

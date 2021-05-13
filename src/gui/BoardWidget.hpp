@@ -1,6 +1,8 @@
 #ifndef GUI_BOARDWIDGET_HPP
 #define GUI_BOARDWIDGET_HPP
 
+#include "src/renderer/NullRenderer.hpp"
+
 #include <QWidget>
 
 class IRenderer;
@@ -20,7 +22,7 @@ protected:
     void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
 
 private:
-    IRenderer* renderer = nullptr;
+    IRenderer* renderer = &NullRenderer::instance();
 };
 
 #endif // GUI_BOARDWIDGET_HPP
