@@ -6,17 +6,17 @@
 class NullRenderer : public IRenderer {
 public:
     static IRenderer& instance() { return renderer; }
-    
-    NullRenderer(const NullRenderer& object) = delete;
 
 private:
     static NullRenderer renderer;
 
+public:
+    NullRenderer(const NullRenderer& object) = delete;
+    
+    void render(QPainter& painter) Q_DECL_OVERRIDE { Q_UNUSED(painter) }
+
 private:
     NullRenderer() = default;
-
-public:
-    void render(QPainter& painter) Q_DECL_OVERRIDE {}
 };
 
 #endif // RENDERER_NULLRENDERER_HPP

@@ -2,6 +2,7 @@
 #define RENDERER_RENDERER_HPP
 
 #include "IRenderer.hpp"
+#include "src/model/NullModel.hpp"
 
 #include <QPainter>
 
@@ -19,7 +20,7 @@ private:
     int fieldSize(int width, int height, int spacing);
 
 private:
-    const IModel* model = nullptr;
+    const IModel* model = &NullModel::instance();
 };
 
 #endif // RENDERER_RENDERER_HPP

@@ -7,28 +7,26 @@ void Renderer::setModel(const IModel* const model) {
 }
 
 void Renderer::render(QPainter& painter) {
-    if(model != nullptr) {
-        const int width = painter.device()->width();
-        const int height = painter.device()->height();
-        const int spacing = spacingSize(width, height);
-        const int field = fieldSize(width, height, spacing);
-        const int sizeAndSpacing = field + spacing;
-        const int boardWidth = model->columns() * sizeAndSpacing + spacing;
-        const int boardHeight = model->rows() * sizeAndSpacing + spacing;
-        const int x0 = (width - boardWidth) / 2;
-        const int y0 = (height - boardHeight) / 2;
-        
-        painter.fillRect(0, 0, width, height, Qt::gray);
-        painter.fillRect(x0, y0, boardWidth, boardHeight, Qt::white);
-        
-        for(int row = 0, size = sizeAndSpacing; row < model->rows(); row++)
-            for(int col = 0; col < model->columns(); col++)
-                painter.fillRect(x0 + col * size + spacing,
-                                 y0 + row * size + spacing,
-                                 field,
-                                 field,
-                                 Qt::lightGray);
-    }
+    const int width = painter.device()->width();
+    const int height = painter.device()->height();
+    const int spacing = spacingSize(width, height);
+    const int field = fieldSize(width, height, spacing);
+    const int sizeAndSpacing = field + spacing;
+    const int boardWidth = model->columns() * sizeAndSpacing + spacing;
+    const int boardHeight = model->rows() * sizeAndSpacing + spacing;
+    const int x0 = (width - boardWidth) / 2;
+    const int y0 = (height - boardHeight) / 2;
+    
+    painter.fillRect(0, 0, width, height, Qt::gray);
+    painter.fillRect(x0, y0, boardWidth, boardHeight, Qt::white);
+    
+    for(int row = 0, size = sizeAndSpacing; row < model->rows(); row++)
+        for(int col = 0; col < model->columns(); col++)
+            painter.fillRect(x0 + col * size + spacing,
+                             y0 + row * size + spacing,
+                             field,
+                             field,
+                             Qt::lightGray);
 }
 
 int Renderer::spacingSize(int width, int height) {

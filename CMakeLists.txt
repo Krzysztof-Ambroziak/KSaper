@@ -34,6 +34,8 @@ target_sources(KSaper
     PRIVATE src/model/IModel.hpp
     PRIVATE src/model/Model.cpp
     PRIVATE src/model/Model.hpp
+    PRIVATE src/model/NullModel.cpp
+    PRIVATE src/model/NullModel.hpp
     PRIVATE src/renderer/IRenderer.hpp
     PRIVATE src/renderer/NullRenderer.cpp
     PRIVATE src/renderer/NullRenderer.hpp
