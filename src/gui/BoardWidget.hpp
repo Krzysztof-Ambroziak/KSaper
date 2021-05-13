@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class Renderer;
+class IRenderer;
 
 class BoardWidget : public QWidget {
 public:
@@ -14,13 +14,13 @@ public:
 public:
     explicit BoardWidget(QWidget* parent = nullptr);
     
-    void setRenderer(Renderer* renderer);
+    void setRenderer(IRenderer* renderer);
 
 protected:
     void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
 
 private:
-    Renderer* renderer = nullptr;
+    IRenderer* renderer = nullptr;
 };
 
 #endif // GUI_BOARDWIDGET_HPP

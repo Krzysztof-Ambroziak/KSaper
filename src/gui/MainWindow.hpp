@@ -8,13 +8,13 @@ namespace Ui {
 }
 
 class Actions;
-class Renderer;
+class IRenderer;
 
 class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget* parent = nullptr);
     
-    void setRenderer(Renderer* renderer);
+    void setRenderer(IRenderer* renderer);
     
     void buildMenuAndToolBar(const Actions& actions);
     

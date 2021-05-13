@@ -12,7 +12,7 @@ BoardWidget::BoardWidget(QWidget* parent) :
     setMinimumSize(minWidth, minHeight);
 }
 
-void BoardWidget::setRenderer(Renderer* const rend) {
+void BoardWidget::setRenderer(IRenderer* const rend) {
     renderer = rend;
 }
 
