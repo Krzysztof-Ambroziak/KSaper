@@ -3,6 +3,8 @@
 
 #include "src/Definitions.hpp"
 
+#include <QSize>
+
 class IModel {
 public:
     virtual int rows() const = 0;
@@ -12,6 +14,8 @@ public:
     virtual int mines() const = 0;
     
     virtual ksaper::Field field(int row, int column) const = 0;
+    
+    virtual QSize boardSize() const = 0;
 };
 
 #endif // MODEL_IMODEL_HPP

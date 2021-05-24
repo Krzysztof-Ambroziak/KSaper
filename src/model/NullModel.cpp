@@ -19,3 +19,7 @@ ksaper::Field NullModel::field(int row, int column) const {
     Q_UNUSED(column);
     return ksaper::EMPTY;
 }
+
+QSize NullModel::boardSize() const {
+    return {0, 0};
+}

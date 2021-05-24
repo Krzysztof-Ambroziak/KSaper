@@ -11,6 +11,11 @@ constexpr int MAX_COLUMNS = 50;
 const QString ORGANIZATION = "krzysztof.ambroziak";
 const QString APPLICATION = "KSaper";
 
+enum Visibility {
+    HIDDEN = 0,
+    VISIBLE = 1,
+};
+
 enum Field {
     EMPTY = 0,
     MINE = 1
@@ -29,10 +34,9 @@ enum Neighbours {
 };
 
 enum Mark {
-    HIDDEN = 0,
-    VISIBLE = 1,
-    BOMB = 2,
-    QUESTION = 3
+    NO_MARK = 0,
+    BOMB = 1,
+    QUESTION = 2
 };
 
 enum Level {
@@ -43,6 +47,12 @@ enum Level {
 };
 
 constexpr Level DEFAULT_LEVEL = Level::EASY;
+
+struct Coordinate {
+    int row;
+    
+    int column;
+};
 
 struct Dimension {
     int rows;
@@ -57,6 +67,8 @@ struct Size {
 };
 
 struct Square {
+    Visibility visibility;
+
     Field field;
     
     Neighbours neighbours;

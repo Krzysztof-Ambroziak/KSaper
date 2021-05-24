@@ -1,5 +1,6 @@
 #include "Controller.hpp"
 #include "src/gui/MainWindow.hpp"
+#include "src/gui/BoardWidget.hpp"
 #include "src/model/Model.hpp"
 #include "src/renderer/Renderer.hpp"
 
@@ -36,8 +37,11 @@ Controller::Controller(Model* const model, MainWindow* const mainWindow, Rendere
         renderer(renderer),
         randGenerator(QRandomGenerator::securelySeeded()) {
     renderer->setModel(model);
+    
     mainWindow->setRenderer(renderer);
     QObject::connect(actions.newGame, &QAction::triggered, this, &Controller::newGame);
+    QObject::connect(mainWindow->boardWidget(), &BoardWidget::clicked, this, &Controller::clicked);
+    QObject::connect(mainWindow->boardWidget(), &BoardWidget::resized, this->model, &Model::setBoardSize);
 }
 
 void Controller::start() {
@@ -70,6 +74,23 @@ bool Controller::isMinesFullFilled(const QVector<ksaper::Field>& squares) const 
     return mineSquares(squares) == model->mines();
 }
 
+void Controller::leftButtonClicked(const ksaper::Coordinate& coords) {
+    const int row = coords.row;
+    const int column = coords.column;
+    if(model->visibility(row, column) == ksaper::HIDDEN && model->mark(row, column) == ksaper::NO_MARK)
+        model->setVisible(row, column);
+}
+
+void Controller::clicked(const QPoint& point, Qt::MouseButton button) {
+    auto coords = renderer->coordinate(point);
+    
+    switch(button) {
+    case Qt::LeftButton:
+        leftButtonClicked(coords);
+        break;
+    }
+}
+
 void Controller::newGame() {
     const auto rows = model->rows();
     const auto columns = model->columns();
@@ -87,8 +108,9 @@ void Controller::newGame() {
     
     for(int row = 0; row < rows; row++)
         for(int column = 0; column < columns; column++)
-            model->setSquare(row, column, {squares[row * columns + column],
+            model->setSquare(row, column, {ksaper::Visibility::HIDDEN,
+                                           squares[row * columns + column],
                                            ksaper::ZERO,
-                                           ksaper::HIDDEN}
+                                           ksaper::NO_MARK}
                              );
 }

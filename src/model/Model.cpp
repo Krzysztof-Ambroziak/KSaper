@@ -16,6 +16,25 @@ ksaper::Field Model::field(int row, int column) const {
     return fBoard->square(row, column).field;
 }
 
+ksaper::Mark Model::mark(int row, int column) const {
+    return fBoard->square(row, column).mark;
+}
+
+ksaper::Visibility Model::visibility(int row, int column) const {
+    return fBoard->square(row, column).visibility;
+}
+
+void Model::setVisible(int row, int column) {
+    auto square = fBoard->square(row, column);
+    square.visibility = ksaper::VISIBLE;
+    
+    fBoard->setSquare(row, column, square);
+}
+
+QSize Model::boardSize() const {
+    return fBoardSize;
+}
+
 void Model::setLevel(ksaper::Level level, const ksaper::Size& size) {
     fLevel = level;
     switch(level) {
@@ -38,4 +57,8 @@ void Model::setLevel(ksaper::Level level, const ksaper::Size& size) {
 
 void Model::setSquare(int row, int column, const ksaper::Square& square) {
     fBoard->setSquare(row, column, square);
+}
+
+void Model::setBoardSize(const QSize& boardSize) {
+    fBoardSize = boardSize;
 }

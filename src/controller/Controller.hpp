@@ -37,8 +37,12 @@ private:
     void readPreviousBoardLevel() const;
     
     bool isMinesFullFilled(const QVector<ksaper::Field>& squares) const;
+    
+    void leftButtonClicked(const ksaper::Coordinate& coords);
 
 private slots:
+    void clicked(const QPoint& point, Qt::MouseButton button);
+    
     void newGame();
 
 private:

@@ -21,6 +21,8 @@ public:
     
     ksaper::Field field(int row, int column) const Q_DECL_OVERRIDE;
 
+    QSize boardSize() const Q_DECL_OVERRIDE;
+
 private:
     NullModel() = default;
 };

@@ -1,10 +1,5 @@
 #include "Board.hpp"
 
-Board::Board(int rows, int columns, int mines) :
-        fRows(rows > 0 && rows <= ksaper::MAX_ROWS ? rows : ksaper::MAX_ROWS),
-        fColumns(columns > 0 && columns <= ksaper::MAX_COLUMNS ? columns : ksaper::MAX_COLUMNS),
-        fMines(mines > 0 && mines < rows * columns ? mines : 1) {}
-
 Board Board::easyBoard() {
     const ksaper::Size& size = ksaper::LevelToSize[ksaper::EASY];
     const ksaper::Dimension& dim = size.dimension;
@@ -54,3 +49,8 @@ void Board::setSquare(int row, int column, const ksaper::Square& square) {
 ksaper::Square Board::square(int row, int column) const {
     return fBoard[row][column];
 }
+
+Board::Board(int rows, int columns, int mines) :
+        fRows(rows > 0 && rows <= ksaper::MAX_ROWS ? rows : ksaper::MAX_ROWS),
+        fColumns(columns > 0 && columns <= ksaper::MAX_COLUMNS ? columns : ksaper::MAX_COLUMNS),
+        fMines(mines > 0 && mines < rows * columns ? mines : 1) {}

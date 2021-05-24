@@ -8,6 +8,10 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->setupUi(this);
 }
 
+BoardWidget* MainWindow::boardWidget() const {
+    return ui->boardWidget;
+}
+
 void MainWindow::setRenderer(IRenderer* const renderer) {
     ui->boardWidget->setRenderer(renderer);
 }
