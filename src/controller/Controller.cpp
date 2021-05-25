@@ -81,6 +81,131 @@ void Controller::leftButtonClicked(const ksaper::Coordinate& coords) {
         model->setVisible(row, column);
 }
 
+QVector<ksaper::Neighbours> Controller::computeNeighbours(const QVector<ksaper::Field>& fields) const {
+    const auto rows = model->rows();
+    const auto columns = model->columns();
+    QVector<ksaper::Neighbours> neighbours(rows * columns, ksaper::ZERO);
+    
+    computeNeighboursFromCornerFields(fields, neighbours);
+    computeNeighboursForSideFields(fields, neighbours);
+    computeNeighboursFromCentralFields(fields, neighbours);
+    
+    return neighbours;
+}
+
+void Controller::computeNeighboursFromCornerFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const {
+    const auto rows = model->rows();
+    const auto columns = model->columns();
+    int n;
+    
+    // left-top corner
+    n = 0;
+    if(fields[1] == ksaper::MINE) n++;
+    if(fields[rows] == ksaper::MINE) n++;
+    if(fields[rows + 1] == ksaper::MINE) n++;
+    neighbours[0] = static_cast<ksaper::Neighbours>(n);
+    
+    // right-top corner
+    n = 0;
+    if(fields[columns - 2] == ksaper::MINE) n++;
+    if(fields[2 * columns - 2] == ksaper::MINE) n++;
+    if(fields[2 * columns - 1] == ksaper::MINE) n++;
+    neighbours[columns - 1] = static_cast<ksaper::Neighbours>(n);
+    
+    // left-bottom corner
+    n = 0;
+    if(fields[(rows - 2) * columns] == ksaper::MINE) n++;
+    if(fields[(rows - 2) * columns + 1] == ksaper::MINE) n++;
+    if(fields[(rows - 1) * columns + 1] == ksaper::MINE) n++;
+    neighbours[(rows - 1) * columns] = static_cast<ksaper::Neighbours>(n);
+    
+    // right-bottom corner
+    n = 0;
+    if(fields[(rows - 1) * columns - 2] == ksaper::MINE) n++;
+    if(fields[(rows - 1) * columns - 1] == ksaper::MINE) n++;
+    if(fields[rows * columns - 2] == ksaper::MINE) n++;
+    neighbours[rows * columns - 1] = static_cast<ksaper::Neighbours>(n);
+}
+
+void Controller::computeNeighboursForSideFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const {
+    const auto rows = model->rows();
+    const auto columns = model->columns();
+    
+    // top side
+    for(int column = 1; column < columns; column++) {
+        int n = 0;
+        const int position = column;
+        
+        if(fields[position - 1] == ksaper::MINE) n++;
+        if(fields[position + 1] == ksaper::MINE) n++;
+        if(fields[position + columns - 1] == ksaper::MINE) n++;
+        if(fields[position + columns] == ksaper::MINE) n++;
+        if(fields[position + columns + 1] == ksaper::MINE) n++;
+        neighbours[position] = static_cast<ksaper::Neighbours>(n);
+    }
+    
+    // right side
+    for(int row = 1; row < rows; row++) {
+        int n = 0;
+        const int position = row * columns - 1;
+        
+        if(fields[position - columns] == ksaper::MINE) n++;
+        if(fields[position + columns] == ksaper::MINE) n++;
+        if(fields[position - 1 - columns] == ksaper::MINE) n++;
+        if(fields[position - 1] == ksaper::MINE) n++;
+        if(fields[position - 1 + columns] == ksaper::MINE) n++;
+        neighbours[position] = static_cast<ksaper::Neighbours>(n);
+    }
+    
+    // bottom side
+    for(int column = 1; column < columns; column++) {
+        int n = 0;
+        const int position = (rows - 1) * columns + column;
+        
+        if(fields[position - 1] == ksaper::MINE) n++;
+        if(fields[position + 1] == ksaper::MINE) n++;
+        if(fields[position - columns - 1] == ksaper::MINE) n++;
+        if(fields[position - columns] == ksaper::MINE) n++;
+        if(fields[position - columns + 1] == ksaper::MINE) n++;
+        neighbours[position] = static_cast<ksaper::Neighbours>(n);
+    }
+    
+    // left side
+    for(int row = 1; row < columns; row++) {
+        int n = 0;
+        const int position = row * columns;
+        
+        if(fields[position - columns] == ksaper::MINE) n++;
+        if(fields[position + columns] == ksaper::MINE) n++;
+        if(fields[position + 1 - columns] == ksaper::MINE) n++;
+        if(fields[position + 1] == ksaper::MINE) n++;
+        if(fields[position + 1 + columns] == ksaper::MINE) n++;
+        neighbours[position] = static_cast<ksaper::Neighbours>(n);
+    }
+}
+
+void Controller::computeNeighboursFromCentralFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const {
+    const auto rows = model->rows();
+    const auto columns = model->columns();
+    
+    for(int row = 1; row < rows - 1; row++)
+        for(int column = 1; column < columns - 1; column++) {
+            int n = 0;
+            const int position = row * columns + column;
+            
+            if(fields[(row - 1) * rows + (column - 1)] == ksaper::MINE) n++;
+            if(fields[(row - 1) * rows + column] == ksaper::MINE) n++;
+            if(fields[(row - 1) * rows + (column + 1)] == ksaper::MINE) n++;
+            if(fields[row * rows + (column - 1)] == ksaper::MINE) n++;
+            if(fields[row * rows + (column + 1)] == ksaper::MINE) n++;
+            if(fields[(row + 1) * rows + (column - 1)] == ksaper::MINE) n++;
+            if(fields[(row + 1) * rows + column] == ksaper::MINE) n++;
+            if(fields[(row + 1) * rows + (column + 1)] == ksaper::MINE) n++;
+            
+            neighbours[position] = static_cast<ksaper::Neighbours>(n);
+        }
+}
+
 void Controller::clicked(const QPoint& point, Qt::MouseButton button) {
     auto coords = renderer->coordinate(point);
     
@@ -106,11 +231,13 @@ void Controller::newGame() {
         specialCopy(buffer, squares);
     }
     
+    QVector<ksaper::Neighbours> neighbours = computeNeighbours(squares);
+    
     for(int row = 0; row < rows; row++)
         for(int column = 0; column < columns; column++)
             model->setSquare(row, column, {ksaper::Visibility::HIDDEN,
                                            squares[row * columns + column],
-                                           ksaper::ZERO,
+                                           neighbours[row * columns + column],
                                            ksaper::NO_MARK}
                              );
 }

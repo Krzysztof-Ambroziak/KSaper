@@ -39,6 +39,14 @@ private:
     bool isMinesFullFilled(const QVector<ksaper::Field>& squares) const;
     
     void leftButtonClicked(const ksaper::Coordinate& coords);
+    
+    QVector<ksaper::Neighbours> computeNeighbours(const QVector<ksaper::Field>& fields) const;
+    
+    void computeNeighboursFromCornerFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const;
+    
+    void computeNeighboursForSideFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const;
+    
+    void computeNeighboursFromCentralFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const;
 
 private slots:
     void clicked(const QPoint& point, Qt::MouseButton button);
