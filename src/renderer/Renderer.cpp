@@ -52,13 +52,19 @@ void Renderer::render(QPainter& painter) {
                                  field,
                                  field,
                                  Qt::lightGray);
-            else {
-                painter.drawPixmap(offsetX + col * size + spacing,
-                                   offsetY + row * size + spacing,
-                                   field,
-                                   field,
-                                   pixmaps[model->neighbours(row, col)]);
-            }
+            else
+                if(model->field(row, col) == ksaper::EMPTY)
+                    painter.drawPixmap(offsetX + col * size + spacing,
+                                       offsetY + row * size + spacing,
+                                       field,
+                                       field,
+                                       pixmaps[model->neighbours(row, col)]);
+                else
+                    painter.drawPixmap(offsetX + col * size + spacing,
+                                       offsetY + row * size + spacing,
+                                       field,
+                                       field,
+                                       {":/img/bomb"});
         }
 }
 

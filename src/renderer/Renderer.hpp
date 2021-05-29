@@ -25,7 +25,7 @@ private:
 
 private:
     const IModel* model = &NullModel::instance();
-
+    
     const QHash<ksaper::Neighbours, QPixmap> pixmaps {
         {ksaper::ZERO, {}},
         {ksaper::ONE, {":/img/1"}},

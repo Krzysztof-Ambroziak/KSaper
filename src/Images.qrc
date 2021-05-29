@@ -8,5 +8,6 @@
         <file alias="6">resources/6.png</file>
         <file alias="7">resources/7.png</file>
         <file alias="8">resources/8.png</file>
+        <file alias="bomb">resources/bomb.png</file>
     </qresource>
 </RCC>
