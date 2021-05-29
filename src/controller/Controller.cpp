@@ -242,4 +242,5 @@ void Controller::newGame() {
                                            neighbours[row * columns + column],
                                            ksaper::NO_MARK}
                              );
+    mainWindow->boardWidget()->repaint();
 }
