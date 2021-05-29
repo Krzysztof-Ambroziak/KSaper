@@ -79,7 +79,7 @@ void Controller::leftButtonClicked(const ksaper::Coordinate& coords) {
     const int row = coords.row;
     const int column = coords.column;
     if(model->visibility(row, column) == ksaper::HIDDEN && model->mark(row, column) == ksaper::NO_MARK)
-        model->setVisible(row, column);
+        uncoverGroup(coords);
     mainWindow->boardWidget()->repaint();
 }
 
@@ -206,6 +206,100 @@ void Controller::computeNeighboursFromCentralFields(const QVector<ksaper::Field>
             
             neighbours[position] = static_cast<ksaper::Neighbours>(n);
         }
+}
+
+void Controller::uncoverGroup(const ksaper::Coordinate& coordinate) const {
+    enum Color {
+        WHITE, GREY, BLACK
+    };
+    QVector<Color> visited(model->rows() * model->columns(), Color::WHITE);
+    
+    QVector<ksaper::Coordinate> squares;
+    if(model->field(coordinate.row, coordinate.column) == ksaper::EMPTY && model->neighbours(coordinate.row, coordinate.column) == ksaper::ZERO)
+        squares.push_back({coordinate.row, coordinate.column});
+    model->setVisible(coordinate.row, coordinate.column);
+    
+    while(!squares.isEmpty())
+    {
+        int r;
+        int c;
+        ksaper::Coordinate coords = squares.takeFirst();
+        
+        r = coords.row - 1;
+        c = coords.column - 1;
+        if(r >= 0 && c >= 0) {
+            model->setVisible(r, c);
+            if(model->field(r, c) == ksaper::EMPTY && model->neighbours(r, c) == ksaper::ZERO && visited[r * model->columns() + c] == Color::WHITE) {
+                squares.push_back({r, c});
+                visited[r * model->columns() + c] = Color::GREY;
+            }
+        }
+        r = coords.row - 1;
+        c = coords.column;
+        if(r >= 0) {
+            model->setVisible(r, c);
+            if(model->field(r, c) == ksaper::EMPTY && model->neighbours(r, c) == ksaper::ZERO && visited[r * model->columns() + c] == Color::WHITE) {
+                squares.push_back({r, c});
+                visited[r * model->columns() + c] = Color::GREY;
+            }
+        }
+        r = coords.row - 1;
+        c = coords.column + 1;
+        if(r >= 0 && c < model->columns()) {
+            model->setVisible(r, c);
+            if(model->field(r, c) == ksaper::EMPTY && model->neighbours(r, c) == ksaper::ZERO && visited[r * model->columns() + c] == Color::WHITE) {
+                squares.push_back({r, c});
+                visited[r * model->columns() + c] = Color::GREY;
+            }
+        }
+        r = coords.row;
+        c = coords.column - 1;
+        if(c >= 0) {
+            model->setVisible(r, c);
+            if(model->field(r, c) == ksaper::EMPTY && model->neighbours(r, c) == ksaper::ZERO && visited[r * model->columns() + c] == Color::WHITE) {
+                squares.push_back({r, c});
+                visited[r * model->columns() + c] = Color::GREY;
+            }
+        }
+        r = coords.row;
+        c = coords.column + 1;
+        if(c < model->columns()) {
+            model->setVisible(r, c);
+            if(model->field(r, c) == ksaper::EMPTY && model->neighbours(r, c) == ksaper::ZERO && visited[r * model->columns() + c] == Color::WHITE) {
+                squares.push_back({r, c});
+                visited[r * model->columns() + c] = Color::GREY;
+            }
+        }
+        r = coords.row + 1;
+        c = coords.column - 1;
+        if(r < model->rows() && c >= 0) {
+            model->setVisible(r, c);
+            if(model->field(r, c) == ksaper::EMPTY && model->neighbours(r, c) == ksaper::ZERO && visited[r * model->columns() + c] == Color::WHITE) {
+                squares.push_back({r, c});
+                visited[r * model->columns() + c] = Color::GREY;
+            }
+        }
+        r = coords.row + 1;
+        c = coords.column;
+        if(r < model->rows()) {
+            model->setVisible(r, c);
+            if(model->field(r, c) == ksaper::EMPTY && model->neighbours(r, c) == ksaper::ZERO && visited[r * model->columns() + c] == Color::WHITE) {
+                squares.push_back({r, c});
+                visited[r * model->columns() + c] = Color::GREY;
+            }
+        }
+        r = coords.row + 1;
+        c = coords.column + 1;
+        if(r < model->rows() && c < model->columns()) {
+            model->setVisible(r, c);
+            if(model->field(r, c) == ksaper::EMPTY && model->neighbours(r, c) == ksaper::ZERO && visited[r * model->columns() + c] == Color::WHITE) {
+                squares.push_back({r, c});
+                visited[r * model->columns() + c] = Color::GREY;
+            }
+        }
+        
+        visited[coords.row * model->columns() + coords.column] = Color::BLACK;
+    }
 }
 
 void Controller::clicked(const QPoint& point, Qt::MouseButton button) {

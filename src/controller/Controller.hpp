@@ -47,6 +47,8 @@ private:
     void computeNeighboursForSideFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const;
     
     void computeNeighboursFromCentralFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const;
+    
+    void uncoverGroup(const ksaper::Coordinate& coordinate) const;
 
 private slots:
     void clicked(const QPoint& point, Qt::MouseButton button);
