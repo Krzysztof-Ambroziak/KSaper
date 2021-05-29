@@ -5,7 +5,7 @@
 #include "src/Definitions.hpp"
 #include "src/model/NullModel.hpp"
 
-#include <QPainter>
+#include <QHash>
 
 class IModel;
 class QPoint;
@@ -25,6 +25,18 @@ private:
 
 private:
     const IModel* model = &NullModel::instance();
+
+    const QHash<ksaper::Neighbours, QPixmap> pixmaps {
+        {ksaper::ZERO, {}},
+        {ksaper::ONE, {":/img/1"}},
+        {ksaper::TWO, {":/img/2"}},
+        {ksaper::THREE, {":/img/3"}},
+        {ksaper::FOUR, {":/img/4"}},
+        {ksaper::FIVE, {":/img/5"}},
+        {ksaper::SIX, {":/img/6"}},
+        {ksaper::SEVEN, {":/img/7"}},
+        {ksaper::EIGHT, {":/img/8"}}
+    };
 };
 
 #endif // RENDERER_RENDERER_HPP

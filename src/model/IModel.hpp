@@ -13,6 +13,10 @@ public:
     
     virtual int mines() const = 0;
     
+    virtual ksaper::Visibility visibility(int row, int column) const = 0;
+    
+    virtual ksaper::Neighbours neighbours(int row, int column) const = 0;
+    
     virtual ksaper::Field field(int row, int column) const = 0;
     
     virtual QSize boardSize() const = 0;

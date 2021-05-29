@@ -24,6 +24,10 @@ ksaper::Visibility Model::visibility(int row, int column) const {
     return fBoard->square(row, column).visibility;
 }
 
+ksaper::Neighbours Model::neighbours(int row, int column) const {
+    return fBoard->square(row, column).neighbours;
+}
+
 void Model::setVisible(int row, int column) {
     auto square = fBoard->square(row, column);
     square.visibility = ksaper::VISIBLE;

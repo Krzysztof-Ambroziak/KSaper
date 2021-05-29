@@ -19,8 +19,12 @@ public:
     
     int mines() const Q_DECL_OVERRIDE;
     
+    ksaper::Visibility visibility(int row, int column) const Q_DECL_OVERRIDE;
+    
+    ksaper::Neighbours neighbours(int row, int column) const Q_DECL_OVERRIDE;
+    
     ksaper::Field field(int row, int column) const Q_DECL_OVERRIDE;
-
+    
     QSize boardSize() const Q_DECL_OVERRIDE;
 
 private:

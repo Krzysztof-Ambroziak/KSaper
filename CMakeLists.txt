@@ -18,6 +18,7 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_executable(KSaper)
 target_sources(KSaper
+    PRIVATE src/Images.qrc
     PRIVATE src/Definitions.hpp
     PRIVATE src/KSaperApplication.cpp
     PRIVATE src/controller/Controller.cpp

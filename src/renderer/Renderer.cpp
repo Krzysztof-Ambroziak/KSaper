@@ -2,8 +2,6 @@
 #include "src/gui/BoardWidget.hpp"
 #include "src/model/IModel.hpp"
 
-#include <QDebug>
-
 ksaper::Coordinate Renderer::coordinate(const QPoint& point) const {
     const int width = model->boardSize().width();
     const int height = model->boardSize().height();
@@ -47,12 +45,21 @@ void Renderer::render(QPainter& painter) {
     painter.fillRect(offsetX, offsetY, boardWidth, boardHeight, Qt::white);
     
     for(int row = 0, size = sizeAndSpacing; row < model->rows(); row++)
-        for(int col = 0; col < model->columns(); col++)
-            painter.fillRect(offsetX + col * size + spacing,
-                             offsetY + row * size + spacing,
-                             field,
-                             field,
-                             Qt::lightGray);
+        for(int col = 0; col < model->columns(); col++) {
+            if(model->visibility(row, col) == ksaper::HIDDEN)
+                painter.fillRect(offsetX + col * size + spacing,
+                                 offsetY + row * size + spacing,
+                                 field,
+                                 field,
+                                 Qt::lightGray);
+            else {
+                painter.drawPixmap(offsetX + col * size + spacing,
+                                   offsetY + row * size + spacing,
+                                   field,
+                                   field,
+                                   pixmaps[model->neighbours(row, col)]);
+            }
+        }
 }
 
 int Renderer::spacingSize(int width, int height) const {

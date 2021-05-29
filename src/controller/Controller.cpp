@@ -47,6 +47,7 @@ Controller::Controller(Model* const model, MainWindow* const mainWindow, Rendere
 void Controller::start() {
     readPreviousBoardLevel();
     mainWindow->buildMenuAndToolBar(actions);
+    newGame();
     mainWindow->show();
 }
 
@@ -79,6 +80,7 @@ void Controller::leftButtonClicked(const ksaper::Coordinate& coords) {
     const int column = coords.column;
     if(model->visibility(row, column) == ksaper::HIDDEN && model->mark(row, column) == ksaper::NO_MARK)
         model->setVisible(row, column);
+    mainWindow->boardWidget()->repaint();
 }
 
 QVector<ksaper::Neighbours> Controller::computeNeighbours(const QVector<ksaper::Field>& fields) const {
