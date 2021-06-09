@@ -42,12 +42,6 @@ private:
     
     QVector<ksaper::Neighbours> computeNeighbours(const QVector<ksaper::Field>& fields) const;
     
-    void computeNeighboursFromCornerFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const;
-    
-    void computeNeighboursForSideFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const;
-    
-    void computeNeighboursFromCentralFields(const QVector<ksaper::Field>& fields, QVector<ksaper::Neighbours>& neighbours) const;
-    
     void uncoverGroup(const ksaper::Coordinate& coordinate) const;
 
 private slots:
