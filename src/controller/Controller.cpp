@@ -134,7 +134,7 @@ void Controller::computeNeighboursForSideFields(const QVector<ksaper::Field>& fi
     const auto columns = model->columns();
     
     // top side
-    for(int column = 1; column < columns; column++) {
+    for(int column = 1; column < columns - 1; column++) {
         int n = 0;
         const int position = column;
         
@@ -147,7 +147,7 @@ void Controller::computeNeighboursForSideFields(const QVector<ksaper::Field>& fi
     }
     
     // right side
-    for(int row = 1; row < rows; row++) {
+    for(int row = 1; row < rows - 1; row++) {
         int n = 0;
         const int position = row * columns - 1;
         
@@ -160,7 +160,7 @@ void Controller::computeNeighboursForSideFields(const QVector<ksaper::Field>& fi
     }
     
     // bottom side
-    for(int column = 1; column < columns; column++) {
+    for(int column = 1; column < columns - 1; column++) {
         int n = 0;
         const int position = (rows - 1) * columns + column;
         
@@ -173,7 +173,7 @@ void Controller::computeNeighboursForSideFields(const QVector<ksaper::Field>& fi
     }
     
     // left side
-    for(int row = 1; row < columns; row++) {
+    for(int row = 1; row < rows - 1; row++) {
         int n = 0;
         const int position = row * columns;
         
